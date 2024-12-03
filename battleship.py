@@ -46,3 +46,11 @@ def place_ship(board, size):
             for px, py in positions:
                 board[px][py] = "S"
             return positions
+        
+def setup_ships(board):
+    ship_sizes = [3, 2, 2, 1, 1, 1, 1]  
+    ship_positions = []  
+    for size in ship_sizes:
+        positions = place_ship(board, size) 
+        ship_positions.append(positions) 
+    return ship_positions
