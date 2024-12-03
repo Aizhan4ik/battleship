@@ -29,3 +29,20 @@ def is_valid_position(board, positions):
                 if 0 <= nx < 7 and 0 <= ny < 7 and board[nx][ny] == "S":
                     return False
     return True
+
+def place_ship(board, size):
+    while True:
+        direction = random.choice(["H", "V"])  
+        if direction == "H":  
+            x = random.randint(0, 6)
+            y = random.randint(0, 6 - size)
+            positions = [(x, y + i) for i in range(size)]  
+        else:  
+            x = random.randint(0, 6 - size)
+            y = random.randint(0, 6)
+            positions = [(x + i, y) for i in range(size)] 
+        
+        if is_valid_position(board, positions): 
+            for px, py in positions:
+                board[px][py] = "S"
+            return positions
