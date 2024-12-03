@@ -54,3 +54,13 @@ def setup_ships(board):
         positions = place_ship(board, size) 
         ship_positions.append(positions) 
     return ship_positions
+
+def get_input():
+    move = input("Enter your shot (e.g., B5): ").upper() 
+    if len(move) < 2:  
+        return None
+    row = ord(move[0]) - ord("A")  
+    col = int(move[1]) - 1  
+    if 0 <= row < 7 and 0 <= col < 7:  
+        return row, col
+    return None
