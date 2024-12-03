@@ -64,3 +64,44 @@ def get_input():
     if 0 <= row < 7 and 0 <= col < 7:  
         return row, col
     return None
+
+def main():
+    print("Welcome to Battleship!")
+    player_name = input("Enter your name: ").strip()
+    
+    while True:
+        player_board = create_board()  
+        hidden_board = create_board()  
+        ship_positions = setup_ships(hidden_board)  
+
+        hits = 0  
+        total_ships = 7  
+        shots = 0 
+        shot_cells = set()  
+
+        while hits < total_ships and shots < 30:  
+            clear_screen()
+            display_board(player_board)  
+            print(f"Shots taken: {shots}/30")  
+
+            coords = get_input()  
+            if not coords:
+                print("Invalid input. Please enter a valid shot (e.g., B5).")
+                continue
+
+            x, y = coords
+            if (x, y) in shot_cells:  
+                print("You already shot here! Try again.")
+                continue
+
+            shot_cells.add((x, y))  
+            shots += 1
+
+            if hidden_board[x][y] == "S":  
+                player_board[x][y] = "H" 
+                hidden_board[x][y] = "H"  
+                hits += 1
+                print("Hit!")
+            else:  
+                player_board[x][y] = "M" 
+                print("Miss!")
