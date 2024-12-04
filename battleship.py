@@ -105,3 +105,10 @@ def main():
             else:  
                 player_board[x][y] = "M" 
                 print("Miss!")
+                
+        for ship in ship_positions:
+            if all(hidden_board[px][py] == "H" for px, py in ship):
+             for px, py in ship:
+                player_board[px][py] = "S"  
+            print("You sunk a ship!")
+            break
