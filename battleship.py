@@ -121,3 +121,6 @@ def main():
         play_again = input("Do you want to play again? (yes/no): ").lower()
         if play_again != "yes":
             break
+    print("Thanks for playing Battleship!")
+
+main()
