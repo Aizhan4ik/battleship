@@ -15,7 +15,7 @@ def display_board(board):
     print("  -------------")
     for i in range(7):
         print(chr(65 + i), " ".join(board[i]))
-        
+
 def is_valid_position(board, positions):
     for x, y in positions:
         if not (0 <= x < 7 and 0 <= y < 7):  
@@ -46,7 +46,7 @@ def place_ship(board, size):
             for px, py in positions:
                 board[px][py] = "S"
             return positions
-        
+
 def setup_ships(board):
     ship_sizes = [3, 2, 2, 1, 1, 1, 1]  
     ship_positions = []  
@@ -102,25 +102,26 @@ def main():
                 hidden_board[x][y] = "H"  
                 hits += 1
                 print("Hit!")
+               
+                for ship in ship_positions:
+                    if all(hidden_board[px][py] == "H" for px, py in ship):
+                        for px, py in ship:
+                            player_board[px][py] = "S"  
+                        print("You sunk a ship!")
+                        break
             else:  
                 player_board[x][y] = "M" 
                 print("Miss!")
-                
-        for ship in ship_positions:
-            if all(hidden_board[px][py] == "H" for px, py in ship):
-             for px, py in ship:
-                player_board[px][py] = "S"  
-            print("You sunk a ship!")
-            break
         
         if hits == total_ships:
             print(f"Congratulations, {player_name}! You sank all ships in {shots} shots!")
         else:
             print("Game over! You reached the maximum number of shots (30).")
-            
+
         play_again = input("Do you want to play again? (yes/no): ").lower()
         if play_again != "yes":
             break
+
     print("Thanks for playing Battleship!")
 
 main()
