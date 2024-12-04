@@ -117,3 +117,7 @@ def main():
             print(f"Congratulations, {player_name}! You sank all ships in {shots} shots!")
         else:
             print("Game over! You reached the maximum number of shots (30).")
+            
+        play_again = input("Do you want to play again? (yes/no): ").lower()
+        if play_again != "yes":
+            break
