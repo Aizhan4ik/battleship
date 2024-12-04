@@ -112,3 +112,8 @@ def main():
                 player_board[px][py] = "S"  
             print("You sunk a ship!")
             break
+        
+        if hits == total_ships:
+            print(f"Congratulations, {player_name}! You sank all ships in {shots} shots!")
+        else:
+            print("Game over! You reached the maximum number of shots (30).")
