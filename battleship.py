@@ -40,7 +40,7 @@ def place_ship(board, size):
             return positions
 
 def setup_ships(board):
-    ship_sizes = [3, 2, 2, 1, 1, 1, 1]  
+    ship_sizes = [3, 2, 2, 1, 1, 1, 1]
     ships = [place_ship(board, size) for size in ship_sizes]
     return ships
 
@@ -48,22 +48,24 @@ def all_cells_hit(ship, board):
     return all(board[x][y] == "H" for x, y in ship)
 
 def main():
-    print("Welcome to Seabattle!")
-    input("Enter your name: ")
+    player_history = []
 
     while True:
+        print("Welcome to Seabattle!")
+        player_name = input("Enter your name: ")
+
         player_board = create_board()
         hidden_board = create_board()
         ships = setup_ships(hidden_board)
 
         total_shots = 0
-        hits = 0 
+        hits = 0
         misses = 0
-        sunk_ships = 0  
-        total_ship_cells = 11  
-        ship_hits = {tuple(ship): 0 for ship in ships} 
+        sunk_ships = 0
+        total_ship_cells = 11
+        ship_hits = {tuple(ship): 0 for ship in ships}
 
-        while total_shots < 30 and hits < total_ship_cells:  
+        while total_shots < 30 and hits < total_ship_cells:
             clear_screen()
             display_board(player_board)
             print(f"Shots: {total_shots}, Hits: {hits}, Misses: {misses}")
@@ -90,18 +92,26 @@ def main():
                         hidden_board[row][col] = "H"
                         print("Hit!")
                         hits += 1
-                        ship_hits[tuple(ship)] += 1  
+                        ship_hits[tuple(ship)] += 1
 
                         if ship_hits[tuple(ship)] == len(ship):
                             for x, y in ship:
-                                player_board[x][y] = "S" 
+                                player_board[x][y] = "S"
                             print(f"You sunk a {len(ship)}-cell ship!")
-                            sunk_ships += 1 
+                            sunk_ships += 1
                         break
             else:
                 player_board[row][col] = "M"
                 print("Miss!")
                 misses += 1
+
+        player_history.append({
+            "name": player_name,
+            "shots": total_shots,
+            "hits": hits,
+            "misses": misses,
+            "sunk_ships": sunk_ships
+        })
 
         if hits == total_ship_cells:
             print("Congratulations! You sank all the ships!")
@@ -112,5 +122,8 @@ def main():
             break
 
     print("Thanks for playing Seabattle!")
+    print("\nPlayer History:")
+    for record in player_history:
+        print(f"Player: {record['name']}, Shots: {record['shots']}, Hits: {record['hits']}, Misses: {record['misses']}, Sunk Ships: {record['sunk_ships']}")
 
 main()
